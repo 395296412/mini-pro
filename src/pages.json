@@ -1,21 +1,30 @@
+//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
+		{
+			"path": "pages/welcome/welcome",
+			"style": {
+				"navigationBarTitleText": "FitPro",
+				"navigationStyle": "custom"
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "FitPro"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "FitPro",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"usingComponents": {
 			"van-action-sheet": "/wxcomponents/vant/action-sheet/index",
 			"van-area": "/wxcomponents/vant/area/index",
 			"van-button": "/wxcomponents/vant/button/index",
+			"van-calendar": "/wxcomponents/vant/calendar/index",
 			"van-card": "/wxcomponents/vant/card/index",
 			"van-cell": "/wxcomponents/vant/cell/index",
 			"van-cell-group": "/wxcomponents/vant/cell-group/index",
@@ -58,6 +67,12 @@
 			"van-collapse": "/wxcomponents/vant/collapse/index",
 			"van-collapse-item": "/wxcomponents/vant/collapse-item/index",
 			"van-picker": "/wxcomponents/vant/picker/index"
+		}
+	},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^tab-bar$": "@/components/TabBar.vue"
 		}
 	}
 }
