@@ -1,0 +1,54 @@
+// 颜色变量
+$primary-color: #00c389;
+$secondary-color: #e8f5f2;
+$text-color-primary: #333;
+$text-color-secondary: #666;
+$text-color-light: #999;
+$border-color: #eee;
+$background-color: #f8f8f8;
+$white: #fff;
+$black: #000;
+$error-color: #f56c6c;
+$success-color: #67c23a;
+$warning-color: #e6a23c;
+$info-color: #909399;
+
+// 字体大小
+$font-size-xs: 10px;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-xxl: 20px;
+$font-size-title: 36px;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+$spacing-xxl: 32px;
+
+// 边框圆角
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 8px;
+$border-radius-xl: 16px;
+$border-radius-circle: 50%;
+$border-radius-pill: 9999px;
+
+// 阴影
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// 动画
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;
+
+// 布局
+$header-height: 44px;
+$tabbar-height: 50px;
+$sidebar-width: 200px;

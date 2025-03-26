@@ -1,0 +1,108 @@
+@use './variables.scss' as variables;
+
+// 弹性布局
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// 居中布局
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 垂直居中布局
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// 文本溢出省略
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 多行文本溢出省略
+@mixin text-ellipsis-multi($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 绝对定位居中
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 绝对定位填充
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// 阴影效果
+@mixin box-shadow($level: 'md') {
+  @if $level == 'sm' {
+    box-shadow: variables.$shadow-sm;
+  } @else if $level == 'md' {
+    box-shadow: variables.$shadow-md;
+  } @else if $level == 'lg' {
+    box-shadow: variables.$shadow-lg;
+  }
+}
+
+// 过渡效果
+@mixin transition($property: all, $duration: variables.$transition-normal, $timing: ease-in-out) {
+  transition: $property $duration $timing;
+}
+
+// 按钮基础样式
+@mixin button-base {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: variables.$border-radius-md;
+  padding: variables.$spacing-sm variables.$spacing-lg;
+  @include transition;
+}
+
+// 响应式媒体查询
+@mixin responsive($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (max-width: 575px) { @content; }
+  } @else if $breakpoint == 'sm' {
+    @media (min-width: 576px) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: 992px) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: 1200px) { @content; }
+  }
+}
