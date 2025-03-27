@@ -1,0 +1,66 @@
+/**
+ * 全局样式入口文件
+ * 所有样式统一从这里导入，避免重复导入和命名空间冲突
+ */
+
+// 导入变量和混合
+@forward './variables.scss';
+@forward './mixins.scss';
+@forward './common.scss';
+
+// 使用变量 (用于本文件内部)
+@use './variables.scss' as vars;
+
+// 全局样式
+// 微信小程序不支持:root和CSS变量，改为直接在page中设置样式
+
+// 页面基础样式
+page {
+  min-height: 100%;
+  box-sizing: border-box;
+  font-family: vars.$font-family-base;
+  font-size: vars.$font-size-md;
+  line-height: vars.$line-height-normal;
+  color: vars.$text-color-primary;
+}
+
+// 导出变量，供组件使用
+// 这样组件可以通过 @use '@/assets/styles/index.scss' 导入所有样式
+$primary-color: vars.$primary-color;
+$secondary-color: vars.$secondary-color;
+$text-color-primary: vars.$text-color-primary;
+$text-color-secondary: vars.$text-color-secondary;
+$text-color-light: vars.$text-color-light;
+$background-color-card: vars.$background-color-card;
+$background-color-cream: vars.$background-color-cream;
+
+$font-family-base: vars.$font-family-base;
+$font-family-number: vars.$font-family-number;
+
+$font-size-xs: vars.$font-size-xs;
+$font-size-sm: vars.$font-size-sm;
+$font-size-md: vars.$font-size-md;
+$font-size-lg: vars.$font-size-lg;
+$font-size-xl: vars.$font-size-xl;
+$font-size-xxl: vars.$font-size-xxl;
+
+$font-weight-light: vars.$font-weight-light;
+$font-weight-normal: vars.$font-weight-normal;
+$font-weight-medium: vars.$font-weight-medium;
+$font-weight-bold: vars.$font-weight-bold;
+$font-weight-extra-bold: vars.$font-weight-extra-bold;
+
+$line-height-tight: vars.$line-height-tight;
+$line-height-normal: vars.$line-height-normal;
+$line-height-loose: vars.$line-height-loose;
+
+$spacing-xs: vars.$spacing-xs;
+$spacing-sm: vars.$spacing-sm;
+$spacing-md: vars.$spacing-md;
+$spacing-lg: vars.$spacing-lg;
+$spacing-xl: vars.$spacing-xl;
+
+$border-radius-sm: vars.$border-radius-sm;
+$border-radius-md: vars.$border-radius-md;
+$border-radius-lg: vars.$border-radius-lg;
+$border-radius-circle: vars.$border-radius-circle;

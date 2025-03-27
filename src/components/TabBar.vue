@@ -1,10 +1,20 @@
 <template>
-  <van-tabbar :active="activeTab" @change="onTabChange" fixed placeholder safe-area-inset-bottom>
-    <van-tabbar-item icon="home-o">首页</van-tabbar-item>
-    <van-tabbar-item icon="search">发现</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">社区</van-tabbar-item>
-    <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
-  </van-tabbar>
+  <view class="tab-bar-wrapper">
+    <van-tabbar 
+      :active="activeTab" 
+      @change="onTabChange" 
+      fixed
+      safe-area-inset-bottom
+      custom-class="custom-tabbar"
+      :active-color="activeColor"
+      inactive-color="#757575"
+    >
+      <van-tabbar-item icon="wap-home" />
+      <van-tabbar-item icon="fire" />
+      <van-tabbar-item icon="wap-nav" />
+      <van-tabbar-item icon="contact" />
+    </van-tabbar>
+  </view>
 </template>
 
 <script setup>
@@ -15,6 +25,10 @@ const props = defineProps({
   active: {
     type: Number,
     default: 0
+  },
+  activeColor: {
+    type: String,
+    default: '#C5FF4F' // 新的主题色
   }
 });
 
@@ -35,14 +49,14 @@ const onTabChange = (event) => {
         uni.switchTab({ url: ROUTES.MAIN.HOME });
       }
       break;
-    case 1: // 发现
-      if (getCurrentPage() !== ROUTES.MAIN.DISCOVER) {
-        uni.switchTab({ url: ROUTES.MAIN.DISCOVER });
+    case 1: // 训练
+      if (getCurrentPage() !== ROUTES.MAIN.TRAINING) {
+        uni.switchTab({ url: ROUTES.MAIN.TRAINING });
       }
       break;
-    case 2: // 社区
-      if (getCurrentPage() !== ROUTES.MAIN.COMMUNITY) {
-        uni.switchTab({ url: ROUTES.MAIN.COMMUNITY });
+    case 2: // 数据
+      if (getCurrentPage() !== ROUTES.MAIN.DATA) {
+        uni.switchTab({ url: ROUTES.MAIN.DATA });
       }
       break;
     case 3: // 我的
@@ -62,15 +76,38 @@ const getCurrentPage = () => {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables.scss' as variables;
+@use '@/assets/styles/index.scss' as styles;
 
-// 底部导航栏样式可以在这里自定义
-.van-tabbar {
-  background-color: variables.$white;
+/* 微信小程序不支持:deep()选择器，改为使用全局选择器 */
+.custom-tabbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  background-color: styles.$white;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 100;
 }
 
+.tab-bar-wrapper {
+  width: 100%;
+  height: 56px;
+}
+
+.van-tabbar-item {
+  padding: 0;
+}
+
+.van-tabbar-item__icon {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.van-tabbar-item__text {
+  display: none;
+}
+
+/* 微信小程序不支持v-bind()语法，改为使用固定颜色 */
 .van-tabbar-item--active {
-  color: variables.$primary-color;
+  color: styles.$primary-color;
 }
 </style>

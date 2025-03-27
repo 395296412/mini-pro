@@ -77,7 +77,7 @@
 }
 
 // 过渡效果
-@mixin transition($property: all, $duration: variables.$transition-normal, $timing: ease-in-out) {
+@mixin transition($property: all, $duration: variables.$transition-normal, $timing: variables.$transition-function-default) {
   transition: $property $duration $timing;
 }
 

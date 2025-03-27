@@ -71,6 +71,23 @@ export const useUserStore = defineStore('user', {
     // 更新天气信息
     updateWeather(weatherData) {
       this.weather = { ...this.weather, ...weatherData };
+    },
+    
+    // 设置天气信息字符串
+    setWeather(weatherString) {
+      // 假设格式为 "城市 天气 温度"，例如 "北京 晴 23°C"
+      const parts = weatherString.split(' ');
+      if (parts.length >= 2) {
+        const city = parts[0];
+        const condition = parts[1];
+        const temperature = parts.length > 2 ? parts[2] : '';
+        
+        this.weather = {
+          city,
+          condition,
+          temperature
+        };
+      }
     }
   }
 });
