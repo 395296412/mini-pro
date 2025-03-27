@@ -150,7 +150,7 @@ const todoItems = ref([
 .class-item {
   padding: styles.$spacing-md;
   border-radius: styles.$border-radius-md;
-  background-color: styles.$white;
+  background-color: styles.$background-color-progress-card ;
   margin-bottom: styles.$spacing-sm;
   
   &:last-child {
@@ -169,7 +169,7 @@ const todoItems = ref([
   width: calc(50% - #{styles.$spacing-sm});
   margin: 0 styles.$spacing-xs styles.$spacing-md;
   padding: styles.$spacing-md;
-  background-color: styles.$white;
+  background-color: styles.$background-color-progress-card;
   border-radius: styles.$border-radius-md;
   
   &:nth-last-child(-n+2) {
@@ -193,7 +193,7 @@ const todoItems = ref([
 .todo-item {
   padding: styles.$spacing-md;
   border-radius: styles.$border-radius-md;
-  background-color: styles.$white;
+  background-color: styles.$background-color-progress-card;
   margin-bottom: styles.$spacing-sm;
   
   &:last-child {
