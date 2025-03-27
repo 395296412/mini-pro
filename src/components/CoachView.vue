@@ -52,8 +52,8 @@
             stroke-width="4px"
           />
           <view class="progress-text flex-between">
-            <text class="text-sm text-light">目标完成度</text>
-            <text class="text-sm text-bold">{{ student.progress }}%</text>
+            <text class="text-sm text-light">剩余课时</text>
+            <text class="text-sm text-bold">{{ student.progress }}节课</text>
           </view>
         </view>
       </view>
