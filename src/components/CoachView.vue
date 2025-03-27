@@ -1,16 +1,17 @@
 <template>
   <view class="coach-view">
-    <!-- 今日课程区域 -->
-    <view class="today-class p-lg">
-      <view class="section-title mb-md flex-between">
-        <text class="text-lg text-bold">今日课程</text>
-        <text class="text-sm text-primary">{{ todayClasses.length }}节课</text>
+    <!-- 今日课程卡片 -->
+    <view class="card">
+      <text class="card-title">今日课程</text>
+      <view class="flex-between mb-sm">
+        <text class="text-sm text-secondary">{{ todayClasses.length }}节课</text>
       </view>
       
+      <!-- 课程列表 -->
       <view 
-        class="class-card bg-white p-md rounded-lg shadow-sm mb-md" 
         v-for="(classItem, index) in todayClasses" 
         :key="index"
+        class="class-item mb-md"
       >
         <view class="class-header flex-between mb-sm">
           <view class="class-title flex align-center">
@@ -28,18 +29,16 @@
       </view>
     </view>
     
-    <!-- 学员进度区域 -->
-    <view class="student-progress p-lg mt-lg">
-      <view class="section-title mb-md flex-between">
-        <text class="text-lg text-bold">学员进度</text>
-        <text class="text-sm text-primary">查看全部</text>
-      </view>
+    <!-- 学员进度卡片 -->
+    <view class="card mt-md">
+      <text class="card-title">学员进度</text>
       
+      <!-- 学员进度网格 -->
       <view class="progress-grid">
         <view 
-          class="progress-card bg-white p-md rounded-lg" 
           v-for="(student, index) in studentProgress" 
           :key="index"
+          class="progress-item"
         >
           <view class="student-info flex align-center mb-sm">
             <view class="student-avatar flex-center mr-sm" :class="`bg-${student.color}`">
@@ -47,18 +46,31 @@
             </view>
             <text class="text-md">{{ student.name }}</text>
           </view>
-          <view class="progress-bar mb-xs">
-            <view class="progress-bg">
-              <view 
-                class="progress-fill" 
-                :style="{ width: `${student.progress}%`, backgroundColor: getProgressColor(student.color) }"
-              ></view>
-            </view>
-          </view>
+          <van-progress 
+            :percentage="student.progress" 
+            :show-pivot="false" 
+            stroke-width="4px"
+          />
           <view class="progress-text flex-between">
-            <text class="text-sm text-light">目标完成度</text>
-            <text class="text-sm text-bold">{{ student.progress }}%</text>
+            <text class="text-sm text-light">剩余课时</text>
+            <text class="text-sm text-bold">{{ student.progress }}节课</text>
           </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 待办事项卡片 -->
+    <view class="card mt-md">
+      <text class="card-title">待办事项</text>
+      <view class="todo-list">
+        <view class="todo-item flex-between" v-for="(todo, index) in todoItems" :key="index">
+          <view class="flex align-center">
+            <view class="todo-checkbox mr-sm" :class="{'todo-checked': todo.completed}">
+              <van-icon v-if="todo.completed" name="success" size="12px" color="#fff" />
+            </view>
+            <text class="text-md" :class="{'text-light': todo.completed}">{{ todo.content }}</text>
+          </view>
+          <text class="text-sm text-light">{{ todo.time }}</text>
         </view>
       </view>
     </view>
@@ -94,73 +106,143 @@ const studentProgress = ref([
   { name: '赵学员', progress: 30, color: 'pink' }
 ]);
 
+// 待办事项数据
+const todoItems = ref([
+  { content: '更新李学员的训练计划', completed: true, time: '09:30' },
+  { content: '回复王学员的饮食咨询', completed: false, time: '13:00' },
+  { content: '准备明天的团体课程', completed: false, time: '16:00' }
+]);
+
 // 获取进度条颜色
-const getProgressColor = (color) => {
-  const colorMap = {
-    blue: '#4080ff',
-    purple: '#8a2be2',
-    green: '#00c389',
-    pink: '#ff6b9a'
-  };
-  return colorMap[color] || colorMap.blue;
-};
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables.scss' as variables;
+@use '@/assets/styles/index.scss' as styles;
 
 .coach-view {
-  padding-bottom: 60px;
+  padding: 0; // 移除内边距，由外层容器统一控制
 }
 
-.section-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+// 卡片基础样式
+.card {
+  background-color: styles.$background-color-card;
+  border-radius: styles.$border-radius-lg;
+  padding: styles.$spacing-lg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: styles.$text-color-primary;
+  margin-bottom: styles.$spacing-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
-.class-card {
-  border-left: 4px solid variables.$primary-color;
+// 卡片标题
+.card-title {
+  font-size: styles.$font-size-lg;
+  font-weight: bold;
+  display: block;
+  margin-bottom: styles.$spacing-md;
+  color: styles.$text-color-primary;
 }
 
+// 课程项样式
+.class-item {
+  padding: styles.$spacing-md;
+  border-radius: styles.$border-radius-md;
+  background-color: styles.$background-color-progress-card ;
+  margin-bottom: styles.$spacing-sm;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// 学员进度网格
 .progress-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -#{styles.$spacing-xs};
 }
 
+.progress-item {
+  width: calc(50% - #{styles.$spacing-sm});
+  margin: 0 styles.$spacing-xs styles.$spacing-md;
+  padding: styles.$spacing-md;
+  background-color: styles.$background-color-progress-card;
+  border-radius: styles.$border-radius-md;
+  
+  &:nth-last-child(-n+2) {
+    margin-bottom: 0;
+  }
+}
+
+// 学员头像
 .student-avatar {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: styles.$font-size-sm;
 }
 
-.bg-blue {
-  background-color: #4080ff;
+// 待办事项列表
+.todo-list {
+  margin-top: styles.$spacing-md;
 }
 
+.todo-item {
+  padding: styles.$spacing-md;
+  border-radius: styles.$border-radius-md;
+  background-color: styles.$background-color-progress-card;
+  margin-bottom: styles.$spacing-sm;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &.completed {
+    opacity: 0.7;
+  }
+}
+
+// 颜色类
 .bg-purple {
-  background-color: #8a2be2;
+  background-color: styles.$secondary-color;
 }
 
 .bg-green {
-  background-color: variables.$primary-color;
+  background-color: styles.$primary-color;
 }
 
-.bg-pink {
-  background-color: #ff6b9a;
+.bg-orange {
+  background-color: styles.$warning-color;
 }
 
-.progress-bg {
-  height: 6px;
-  background-color: #f0f0f0;
-  border-radius: 3px;
-  overflow: hidden;
+.bg-black {
+  background-color: styles.$black;
 }
 
-.progress-fill {
-  height: 100%;
-  border-radius: 3px;
+.text-primary {
+  color: styles.$primary-color;
+}
+
+.text-secondary {
+  color: styles.$text-color-secondary;
+}
+
+.text-light {
+  color: styles.$text-color-light;
+}
+
+.text-white {
+  color: styles.$white;
+}
+
+.text-success {
+  color: styles.$success-color;
+}
+
+.text-error {
+  color: styles.$error-color;
 }
 </style>

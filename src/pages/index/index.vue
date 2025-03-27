@@ -1,28 +1,31 @@
 <template>
   <view class="container">
-    <!-- 头部区域 -->
-    <view class="header flex-between p-lg">
-      <view class="weather-info">
-        <text class="text-lg text-bold text-white">{{ userStore.currentWeather }}</text>
-      </view>
-      <view class="user-actions flex align-center">
-        <view v-if="userStore.hasBothRoles" class="role-switch mr-md" @click="switchUserType">
-          <van-icon :name="userStore.isCoach ? 'user-o' : 'manager-o'" size="24px" color="#fff" />
+    <!-- 内容区域 -->
+    <scroll-view scroll-y class="content-area">
+      <!-- 头部区域 - 使用flex-between确保天气和角色切换按钮在两侧 -->
+      <view class="header-content flex justify-between align-center">
+        <!-- 天气信息 -->
+        <view class="weather-info">
+          <text class="text-md text-bold">{{ userStore.currentWeather }}</text>
         </view>
-        <view class="user-avatar">
-          <van-icon name="contact" size="40px" custom-class="avatar-icon" />
-        </view>
+        
+        <!-- 角色切换 - 放在右侧 -->
+        <van-icon 
+          v-if="userStore.hasBothRoles" 
+          class="role-switch-icon"
+          @click="switchUserType"
+          :name="userStore.isCoach ? 'user-o' : 'manager-o'"
+          size="24px"
+        />
       </view>
-    </view>
-    
-    <!-- 内容区域 - 根据用户类型显示不同内容 -->
-    <view class="content-area">
-      <!-- 教练视图 -->
-      <coach-view v-if="userStore.isCoach" />
       
-      <!-- 学员视图 -->
+      <!-- 直接渲染组件，不添加额外包装 -->
+      <coach-view v-if="userStore.isCoach" />
       <student-view v-else />
-    </view>
+      
+      <!-- 底部安全区域，防止内容被底部导航栏遮挡 -->
+      <view class="safe-bottom"></view>
+    </scroll-view>
     
     <!-- 底部导航栏 -->
     <tab-bar :active="activeTab" @change="handleTabChange" />
@@ -38,13 +41,12 @@ import StudentView from '@/components/StudentView.vue';
 
 // 获取用户状态
 const userStore = useUserStore();
-
-// 底部导航栏激活状态
 const activeTab = ref(0);
 
 // 处理底部导航切换
 const handleTabChange = (index) => {
   activeTab.value = index;
+  // 这里可以根据索引执行相应的导航逻辑
 };
 
 // 切换用户身份类型
@@ -57,47 +59,45 @@ onMounted(() => {
   // 实际项目中，这里应该调用天气API获取实时天气
   // 模拟获取天气数据
   setTimeout(() => {
-    userStore.updateWeather({
-      temperature: '23°C',
-      condition: '晴',
-      city: '北京'
-    });
+    userStore.setWeather('晴 26°C');
   }, 500);
 });
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables.scss' as variables;
+@use '@/assets/styles/index.scss' as styles;
 
 .container {
-  min-height: 100vh;
-  background-color: variables.$secondary-color;
-}
-
-.header {
-  background-color: variables.$primary-color;
-  color: variables.$white;
-  border-radius: 0 0 20px 20px;
-}
-
-.avatar-icon {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 5px;
-}
-
-.role-switch {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background-color: styles.$background-color-cream;
 }
 
 .content-area {
-  padding-bottom: 50px;
+  flex: 1;
+  height: calc(100vh - 56px); /* 减去底部导航栏的高度 */
+  padding: 0 styles.$spacing-md;
+}
+
+.header-content {
+  padding: styles.$spacing-md;
+}
+
+.role-switch-icon {
+  color: styles.$primary-color;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+}
+
+.safe-bottom {
+  height: 56px; /* 与底部导航栏高度保持一致 */
 }
 </style>

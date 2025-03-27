@@ -1,23 +1,148 @@
 @use './variables.scss' as variables;
 @use './mixins.scss' as mixins;
 
+/* 全局样式 */
+page,
+view,
+text,
+button,
+input,
+textarea,
+image,
+navigator,
+scroll-view {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 全局字体设置 */
+page,
+view,
+text,
+button,
+input,
+textarea {
+  font-family: variables.$font-family-base;
+  font-size: variables.$font-size-md;
+  line-height: variables.$line-height-normal;
+  color: variables.$text-color-primary;
+}
+
+/* 通用布局工具类 */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+/* 数字字体 */
+.font-number {
+  font-family: variables.$font-family-number;
+}
+
+/* 字体粗细 */
+.font-light {
+  font-weight: variables.$font-weight-light;
+}
+
+.font-normal {
+  font-weight: variables.$font-weight-normal;
+}
+
+.font-medium {
+  font-weight: variables.$font-weight-medium;
+}
+
+.font-bold {
+  font-weight: variables.$font-weight-bold;
+}
+
+.font-extra-bold {
+  font-weight: variables.$font-weight-extra-bold;
+}
+
+/* 行高 */
+.line-height-tight {
+  line-height: variables.$line-height-tight;
+}
+
+.line-height-normal {
+  line-height: variables.$line-height-normal;
+}
+
+.line-height-loose {
+  line-height: variables.$line-height-loose;
+}
+
 /* 布局类 */
-.flex { display: flex; }
 .flex-row { flex-direction: row; }
-.flex-column { flex-direction: column; }
-.flex-wrap { flex-wrap: wrap; }
-.flex-nowrap { flex-wrap: nowrap; }
-.flex-1 { flex: 1; }
-.flex-center { @include mixins.flex-center; }
 .flex-column-center { @include mixins.flex-column-center; }
 .justify-start { justify-content: flex-start; }
-.justify-end { justify-content: flex-end; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-around { justify-content: space-around; }
-.align-start { align-items: flex-start; }
-.align-end { align-items: flex-end; }
-.align-center { align-items: center; }
 .align-stretch { align-items: stretch; }
 
 /* 间距类 */
@@ -124,7 +249,10 @@
 .bg-primary { background-color: variables.$primary-color; }
 .bg-secondary { background-color: variables.$secondary-color; }
 .bg-white { background-color: variables.$white; }
-.bg-gray { background-color: variables.$background-color; }
+.bg-gray { background-color: variables.$background-color-light; }
+.bg-dark { background-color: variables.$background-color-dark; }
+.bg-card-dark { background-color: variables.$background-color-card-dark; }
+.bg-cream { background-color: variables.$background-color-cream; }
 .bg-error { background-color: variables.$error-color; }
 .bg-success { background-color: variables.$success-color; }
 .bg-warning { background-color: variables.$warning-color; }
@@ -176,6 +304,43 @@
 .h-quarter { height: 25%; }
 .h-screen { height: 100vh; }
 .w-screen { width: 100vw; }
+
+/* 隐藏滚动条但保留滚动功能 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+/* 确保scroll-view不显示滚动条 */
+scroll-view {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+/* 页面滚动区域也不显示滚动条 */
+page {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* 所有可滚动元素都不显示滚动条 */
+.scroll-container {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 /* 其他工具类 */
 .clearfix { @include mixins.clearfix; }

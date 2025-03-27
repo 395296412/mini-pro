@@ -25,13 +25,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/variables.scss' as variables;
+
 .welcome-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #e8f5f2;
+  background: variables.$background-color-cream;
 }
 
 .logo-container {
@@ -48,7 +50,7 @@ onMounted(() => {
 .app-title {
   font-size: 36px;
   font-weight: bold;
-  color: #333;
+  color: variables.$text-color-primary;
 }
 
 .start-button {
@@ -56,7 +58,9 @@ onMounted(() => {
   height: 48px !important;
   border-radius: 24px !important;
   font-size: 16px !important;
-  background-color: #00c389 !important;
+  background-color: variables.$primary-color !important;
   border: none !important;
+  color: variables.$dark-color !important;
+  box-shadow: variables.$shadow-button !important;
 }
 </style>

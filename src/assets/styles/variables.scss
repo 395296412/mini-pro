@@ -1,17 +1,38 @@
-// 颜色变量
-$primary-color: #00c389;
-$secondary-color: #e8f5f2;
-$text-color-primary: #333;
-$text-color-secondary: #666;
-$text-color-light: #999;
-$border-color: #eee;
-$background-color: #f8f8f8;
-$white: #fff;
-$black: #000;
-$error-color: #f56c6c;
-$success-color: #67c23a;
-$warning-color: #e6a23c;
-$info-color: #909399;
+// 颜色变量 - 新色系
+$primary-color: #C5FF4F;      // 亮绿色 - 主色调
+$secondary-color: #B388FF;    // 紫色 - 辅助色
+$dark-color: #1A1A1A;         // 黑色 - 深色元素
+
+// 文本颜色
+$text-color-primary: #1A1A1A;   // 主要文本 - 深黑色
+$text-color-secondary: #757575; // 次要文本 - 中灰色
+$text-color-light: #ABABAB;     // 提示文本 - 浅灰色
+
+// 背景颜色
+$background-color-light: #F8F8F8; // 浅色背景
+$background-color-gradient: linear-gradient(to bottom, #F8F8F8 60%, #FFFFFF); // 渐变背景
+$background-color-dark: #1F1F21; // 深色背景 - 整体应用背景
+$background-color-card-dark: #1E1E1E; // 深色卡片背景
+$background-color-cream: #F2F0E4; // 浅米色/浅黄色背景
+$background-color-card: #F8F8F8; // 卡片背景色
+$background-color-progress-card: #E9EEDD; // 卡片内嵌套的背景色
+
+// 基础颜色
+$white: #FFFFFF;
+$black: #1A1A1A;
+$gray-light: #EEEEEE;        // 分割线
+$gray-input: #F5F5F5;        // 输入框背景
+$border-color: #EEEEEE;      // 边框颜色
+
+// 功能色
+$success-color: #BDF830;     // 成功色 - 亮绿色
+$info-color: #B388FF;        // 信息色 - 紫色
+$warning-color: #FFD54F;     // 警告色 - 黄色
+$error-color: #FF5252;       // 错误色 - 红色
+
+// 字体系列 - 跨平台兼容
+$font-family-base: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-number: 'DIN Alternate', 'DIN', -apple-system, BlinkMacSystemFont, sans-serif;
 
 // 字体大小
 $font-size-xs: 10px;
@@ -22,6 +43,18 @@ $font-size-xl: 18px;
 $font-size-xxl: 20px;
 $font-size-title: 36px;
 
+// 字体粗细
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 600;
+$font-weight-extra-bold: 700;
+
+// 行高
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-loose: 1.8;
+
 // 间距
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -30,23 +63,30 @@ $spacing-lg: 16px;
 $spacing-xl: 24px;
 $spacing-xxl: 32px;
 
-// 边框圆角
-$border-radius-sm: 2px;
-$border-radius-md: 4px;
-$border-radius-lg: 8px;
+// 边框和圆角
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
 $border-radius-xl: 16px;
 $border-radius-circle: 50%;
 $border-radius-pill: 9999px;
 
 // 阴影
-$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
 $shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
-$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+$shadow-card: 0 2px 8px rgba(0, 0, 0, 0.05);
+$shadow-button: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 // 动画
 $transition-fast: 0.2s;
 $transition-normal: 0.3s;
 $transition-slow: 0.5s;
+$transition-function-default: ease-in-out;
+$transition-function-linear: linear;
+$transition-function-ease: ease;
+$transition-function-ease-in: ease-in;
+$transition-function-ease-out: ease-out;
 
 // 布局
 $header-height: 44px;

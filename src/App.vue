@@ -12,8 +12,7 @@ export default {
 }
 </script>
 
-
-
-<style>
-/*每个页面公共css */
+<style lang="scss">
+/* 导入全局样式 */
+@use '@/assets/styles/index.scss';
 </style>
