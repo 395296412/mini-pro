@@ -32,9 +32,6 @@
     <!-- 学员进度卡片 -->
     <view class="card mt-md">
       <text class="card-title">学员进度</text>
-      <view class="flex-between mb-md">
-        <text class="text-sm text-secondary">查看全部</text>
-      </view>
       
       <!-- 学员进度网格 -->
       <view class="progress-grid">
@@ -51,9 +48,8 @@
           </view>
           <van-progress 
             :percentage="student.progress" 
-            :color="getProgressColor(student.color)" 
-            stroke-width="6"
-            custom-class="mb-xs"
+            :show-pivot="false" 
+            stroke-width="4px"
           />
           <view class="progress-text flex-between">
             <text class="text-sm text-light">目标完成度</text>
@@ -118,15 +114,6 @@ const todoItems = ref([
 ]);
 
 // 获取进度条颜色
-const getProgressColor = (color) => {
-  const colorMap = {
-    blue: '#B388FF', // 紫色
-    purple: '#B388FF', // 紫色
-    green: '#C5FF4F', // 亮绿色
-    pink: '#1A1A1A' // 黑色
-  };
-  return colorMap[color] || colorMap.blue;
-};
 </script>
 
 <style lang="scss" scoped>

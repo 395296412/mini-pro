@@ -49,9 +49,8 @@
         <view class="flex align-center">
           <text class="text-md text-bold">增肌强化 · 第4周</text>
           <view class="progress-wrapper flex-1">
-            <van-progress :percentage="65" stroke-width="4px" color="#C5FF4F" />
+            <van-progress :percentage="65" :show-pivot="false" stroke-width="4px" />
           </view>
-          <text class="text-sm">65%</text>
         </view>
       </view>
       
