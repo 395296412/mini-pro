@@ -172,10 +172,10 @@ import { ref } from 'vue';
 
 // 文本颜色类
 .text-success {
-  color: styles.$success-color;
+  color: styles.$text-color-primary;
 }
 
 .text-error {
-  color: styles.$error-color;
+  color: styles.$text-color-primary;
 }
 </style>

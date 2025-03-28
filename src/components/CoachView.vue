@@ -1,7 +1,7 @@
 <template>
   <view class="coach-view">
-    <!-- 今日课程卡片 -->
-    <view class="card">
+    <!-- 今日课程区域 -->
+    <view class="section">
       <text class="card-title">今日课程</text>
       <view class="flex-between mb-sm">
         <text class="text-sm text-secondary">{{ todayClasses.length }}节课</text>
@@ -26,41 +26,24 @@
           <van-icon name="clock-o" size="14px" class="mr-xs" />
           <text class="text-sm text-light">剩余{{ classItem.duration }}分钟</text>
         </view>
-      </view>
-    </view>
-    
-    <!-- 学员进度卡片 -->
-    <view class="card mt-md">
-      <text class="card-title">学员进度</text>
-      
-      <!-- 学员进度网格 -->
-      <view class="progress-grid">
-        <view 
-          v-for="(student, index) in studentProgress" 
-          :key="index"
-          class="progress-item"
-        >
-          <view class="student-info flex align-center mb-sm">
-            <view class="student-avatar flex-center mr-sm" :class="`bg-${student.color}`">
-              <text class="text-white">{{ student.name.charAt(0) }}</text>
-            </view>
-            <text class="text-md">{{ student.name }}</text>
-          </view>
+
+        <!-- 课程进度 -->
+        <view class="mt-sm">
           <van-progress 
-            :percentage="student.progress" 
+            :percentage="classItem.progress" 
             :show-pivot="false" 
             stroke-width="4px"
           />
-          <view class="progress-text flex-between">
+          <view class="progress-text flex-between mt-xs">
             <text class="text-sm text-light">剩余课时</text>
-            <text class="text-sm text-bold">{{ student.progress }}节课</text>
+            <text class="text-sm text-bold">{{ classItem.remainingLessons }}节课</text>
           </view>
         </view>
       </view>
     </view>
     
-    <!-- 待办事项卡片 -->
-    <view class="card mt-md">
+    <!-- 待办事项区域 -->
+    <view class="section">
       <text class="card-title">待办事项</text>
       <view class="todo-list">
         <view class="todo-item flex-between" v-for="(todo, index) in todoItems" :key="index">
@@ -87,23 +70,19 @@ const todayClasses = ref([
     title: '增肌训练', 
     time: '10:00 - 11:30', 
     status: '进行中',
-    duration: 45
+    duration: 45,
+    progress: 75,
+    remainingLessons: 8
   },
   { 
     studentName: '王学员', 
     title: '减脂训练', 
     time: '14:00 - 15:30', 
     status: '待开始',
-    duration: 90
+    duration: 90,
+    progress: 42,
+    remainingLessons: 12
   }
-]);
-
-// 学员进度数据
-const studentProgress = ref([
-  { name: '李学员', progress: 75, color: 'blue' },
-  { name: '王学员', progress: 42, color: 'purple' },
-  { name: '张学员', progress: 90, color: 'green' },
-  { name: '赵学员', progress: 30, color: 'pink' }
 ]);
 
 // 待办事项数据
@@ -112,8 +91,6 @@ const todoItems = ref([
   { content: '回复王学员的饮食咨询', completed: false, time: '13:00' },
   { content: '准备明天的团体课程', completed: false, time: '16:00' }
 ]);
-
-// 获取进度条颜色
 </script>
 
 <style lang="scss" scoped>
@@ -123,9 +100,9 @@ const todoItems = ref([
   padding: 0; // 移除内边距，由外层容器统一控制
 }
 
-// 卡片基础样式
-.card {
-  background-color: styles.$background-color-card;
+// 区域基础样式（替代原来的card类）
+.section {
+  background-color: styles.$primary-color;
   border-radius: styles.$border-radius-lg;
   padding: styles.$spacing-lg;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -150,39 +127,12 @@ const todoItems = ref([
 .class-item {
   padding: styles.$spacing-md;
   border-radius: styles.$border-radius-md;
-  background-color: styles.$background-color-progress-card ;
+  background-color: styles.$BC;
   margin-bottom: styles.$spacing-sm;
   
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-// 学员进度网格
-.progress-grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -#{styles.$spacing-xs};
-}
-
-.progress-item {
-  width: calc(50% - #{styles.$spacing-sm});
-  margin: 0 styles.$spacing-xs styles.$spacing-md;
-  padding: styles.$spacing-md;
-  background-color: styles.$background-color-progress-card;
-  border-radius: styles.$border-radius-md;
-  
-  &:nth-last-child(-n+2) {
-    margin-bottom: 0;
-  }
-}
-
-// 学员头像
-.student-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: styles.$font-size-sm;
 }
 
 // 待办事项列表
@@ -193,7 +143,7 @@ const todoItems = ref([
 .todo-item {
   padding: styles.$spacing-md;
   border-radius: styles.$border-radius-md;
-  background-color: styles.$background-color-progress-card;
+  background-color: styles.$primary-color;
   margin-bottom: styles.$spacing-sm;
   
   &:last-child {
@@ -206,32 +156,16 @@ const todoItems = ref([
 }
 
 // 颜色类
-.bg-purple {
-  background-color: styles.$secondary-color;
-}
-
-.bg-green {
-  background-color: styles.$primary-color;
-}
-
-.bg-orange {
-  background-color: styles.$warning-color;
-}
-
-.bg-black {
-  background-color: styles.$black;
-}
-
 .text-primary {
   color: styles.$primary-color;
 }
 
 .text-secondary {
-  color: styles.$text-color-secondary;
+  color: styles.$text-color-primary;
 }
 
 .text-light {
-  color: styles.$text-color-light;
+  color: styles.$text-color-primary;
 }
 
 .text-white {
@@ -239,10 +173,10 @@ const todoItems = ref([
 }
 
 .text-success {
-  color: styles.$success-color;
+  color: styles.$text-color-primary;
 }
 
 .text-error {
-  color: styles.$error-color;
+  color: styles.$text-color-primary;
 }
 </style>

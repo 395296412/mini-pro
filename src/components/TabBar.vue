@@ -7,7 +7,7 @@
       safe-area-inset-bottom
       custom-class="custom-tabbar"
       :active-color="activeColor"
-      inactive-color="#757575"
+      :inactive-color="inactiveColor"
     >
       <van-tabbar-item icon="wap-home" />
       <van-tabbar-item icon="fire" />
@@ -28,7 +28,11 @@ const props = defineProps({
   },
   activeColor: {
     type: String,
-    default: '#C5FF4F' // 新的主题色
+    default: 'var(--primary-color)'// 活动状态下的颜色
+  },
+  inactiveColor: {
+    type: String,
+    default: 'var(--dark-color)' // 不活动状态下的颜色
   }
 });
 
@@ -108,6 +112,6 @@ const getCurrentPage = () => {
 
 /* 微信小程序不支持v-bind()语法，改为使用固定颜色 */
 .van-tabbar-item--active {
-  color: styles.$primary-color;
+  color: styles.$text-color-primary;
 }
 </style>
