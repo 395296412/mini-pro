@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables.scss' as variables;
+@use '@/assets/styles/index.scss' as variables;
 
 .welcome-container {
   display: flex;

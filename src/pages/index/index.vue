@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useUserStore, USER_TYPES } from '@/store/user';
+import { useUserStore } from '@/store/user';
 import TabBar from '@/components/TabBar.vue';
 import CoachView from '@/components/CoachView.vue';
 import StudentView from '@/components/StudentView.vue';
@@ -86,7 +86,7 @@ onMounted(() => {
 }
 
 .role-switch-icon {
-  color: styles.$primary-color;
+  color: styles.$dark-color;
   padding: 8px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.05);
