@@ -59,6 +59,13 @@ $error-color: #FF5252;       // 错误色 - 红色
 $font-family-base: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-number: 'DIN Alternate', 'DIN', -apple-system, BlinkMacSystemFont, sans-serif;
 
+// 图标系列
+$icon-play: 'play-circle-o';
+$icon-pause: 'pause-circle-o';
+$icon-stop: 'stop-circle-o';
+
+
+
 // 字体大小
 $font-size-xs: 10px;
 $font-size-sm: 12px;
@@ -108,6 +115,16 @@ $transition-fast: 0.2s;
 $transition-normal: 0.3s;
 $transition-slow: 0.5s;
 $transition-function-default: ease-in-out;
+
+// 按钮点击动画
+.button-scale-animation{
+  transition: transform $transition-fast $transition-function-default;
+  will-change: transform;
+
+  &:active{
+    transform: scale(0.92) !important;
+  }
+}
 
 // 布局
 $header-height: 44px;

@@ -8,7 +8,7 @@
           <text class="class-title">{{ title }}</text>
           <view class="class-subtitle">{{ studentName }} - {{ location }}</view>
         </view>
-        <view v-if="showStatusButton" class="status-button" @click="handleStatusChange">
+        <view v-if="showStatusButton" class="status-button button-scale-animation" @click="handleStatusChange">
         <van-icon 
           :name="statusIconName" 
           :color="statusIconColor" 
@@ -127,9 +127,9 @@
     const statusIconName = computed(() => {
     switch(currentStatus.value) {
         case '进行中':
-        return 'play-circle-o';
+        return 'pause-circle-o';
         case '已完成':
-        return 'play-circle-o';
+        return 'stop-circle-o';
         default:
         return 'play-circle-o';
     }
