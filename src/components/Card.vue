@@ -1,7 +1,11 @@
 <template>
+  <transition name = "card-fade">
     <view 
       class="class-card"
-      :class="{'active-class': status === '进行中'}"
+      :class="{
+        'active-class': status === '进行中',
+        'completed-class': status === '已完成'
+      }"
     >
       <view class="class-header flex-between">
         <view>
@@ -45,6 +49,7 @@
         </view>
       </view>
     </view>
+  </transition>
   </template>
   
   <script setup>
@@ -188,9 +193,13 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
-    
     &.active-class {
       background-color: styles.$primary-color; // 活跃课程使用浅绿色背景
+    }
+
+    &.completed-class {
+      background-color: styles.$primary-color; 
+      opacity: 0.8;
     }
   }
   

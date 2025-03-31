@@ -116,7 +116,7 @@ $transition-normal: 0.3s;
 $transition-slow: 0.5s;
 $transition-function-default: ease-in-out;
 
-// 按钮点击动画
+// 按钮点击缩放动画
 .button-scale-animation{
   transition: transform $transition-fast $transition-function-default;
   will-change: transform;
@@ -124,6 +124,41 @@ $transition-function-default: ease-in-out;
   &:active{
     transform: scale(0.92) !important;
   }
+}
+
+// 卡片消失动画
+.card-fade-enter-active,
+.card-fade-leave-active{
+  transition: opacity $transition-slow $transition-function-default, transform $transition-slow $transition-function-default;
+  will-change: opacity, transform;
+}
+
+.card-fade-enter-from,
+.card-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+// 卡片补位动画
+.card-list-enter-active,
+.card-list-leave-active {
+  transition: all $transition-slow $transition-function-default;
+  will-change: opacity, transform;
+  position: absolute;
+  width: 100%;
+}
+
+.card-list-enter-from,
+.card-list-leave-to {
+  opacity: 0;
+  transform: translateY(3vh);
+}
+
+.card-list-move {
+  transition: transform $transition-slow cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  position: relative;
+  z-index: 1;
 }
 
 // 布局

@@ -7,6 +7,8 @@
     </view>
     
     <!-- 课程列表 - 每个课程作为独立卡片 -->
+    <view class="today-classes">
+    <transition-group name = 'card-list' tag = 'view' class = 'card-container'>
     <card
       v-for="(classItem) in todayClasses" 
       :key="classItem.id"
@@ -14,15 +16,17 @@
       :student-name="classItem.studentName"
       :start-time="classItem.startTime"
       :status="classItem.status"
-      :status-text="'训练中'"
       :duration="classItem.duration"
       :location="classItem.location"
       :progress="classItem.progress"
       :remaining-lessons="classItem.remainingLessons"
       :show-status-button="true"
+      :style="{ opacity: classItem.opacity !== undefined ? classItem.opacity : 1 }"
       @status-change="handleStatusChange(classItem.id, $event)"
       @complete="handleClassComplete(classItem.id)"
     />
+  </transition-group>
+  </view>
   </view>
 </template>
 
@@ -131,10 +135,20 @@ const handleClassComplete = (id) => {
   if (index !== -1) {
     // 将课程状态设置为已完成
     todayClasses.value[index].status = '已完成';
-    // 延迟移除，给用户一个视觉反馈
-    setTimeout(() => {
-      todayClasses.value.splice(index, 1);
-    }, 500);
+    
+    // 创建一个逐渐减少透明度的动画效果
+    let opacity = 1;
+    const fadeInterval = setInterval(() => {
+      opacity -= 0.05; // 每次减少0.05
+      if (opacity <= 0) {
+        clearInterval(fadeInterval);
+        // 当透明度降到0时移除卡片
+        todayClasses.value.splice(index, 1);
+      } else {
+        // 更新透明度值
+        todayClasses.value[index].opacity = opacity;
+      }
+    }, 35); // 大约700ms内完成渐变(0.05 * 20 ≈ 1)
   }
 };
 </script>
