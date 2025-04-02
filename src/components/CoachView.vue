@@ -8,7 +8,7 @@
     
     <!-- 课程列表 - 每个课程作为独立卡片 -->
     <view class="today-classes">
-    <transition-group name = 'card-list' tag = 'view' class = 'card-container'>
+    <transition-group name = 'card-list' tag = 'view' class = 'card-container class-list'>
     <card
       v-for="(classItem) in todayClasses" 
       :key="classItem.id"
@@ -157,18 +157,31 @@ const handleClassComplete = (id) => {
 @use '@/assets/styles/index.scss' as styles;
 
 .coach-view {
-  padding: 0 16px; // 添加水平内边距
+  padding: 4vw; // 使用相对单位
+  --card-vertical-gap: 4vw; // 卡片垂直间距变量
 }
 
 // 区域标题样式
 .section-header {
-  margin-bottom: 16px;
+  margin-bottom: 3vw; // 使用相对单位
 }
 
 .section-title {
   font-size: styles.$font-size-lg;
   font-weight: bold;
   color: styles.$text-color-primary;
+}
+
+// 卡片容器样式
+.card-container {
+  margin-bottom: var(--card-vertical-gap); // 使用变量控制间距
+}
+
+// 课程列表容器
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-vertical-gap); // 使用变量控制间距
 }
 
 // 文本样式
@@ -178,5 +191,21 @@ const handleClassComplete = (id) => {
 
 .text-secondary{
   color: styles.$text-color-secondary;
+}
+
+// 卡片动画
+.card-fade-enter-active,
+.card-fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card-fade-enter-from,
+.card-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.card-list-move {
+  transition: transform 0.5s ease;
 }
 </style>

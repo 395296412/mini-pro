@@ -36,7 +36,7 @@
       </view>
       
       <!-- 课程进度 -->
-      <view class="mt-sm" v-if="showProgress">
+      <view class="mt-sm" v-if="showProgress && progress > 0">
         <van-progress 
           :color="progressColor"
           :percentage="progress" 
@@ -186,38 +186,35 @@
   
   // 课程卡片样式
   .class-card {
-    background-color: styles.$white;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-    &.active-class {
-      background-color: styles.$primary-color; // 活跃课程使用浅绿色背景
-    }
+  background-color: styles.$white;
+  border-radius: 12px;
+  padding: 4vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 
-    &.completed-class {
-      background-color: styles.$primary-color; 
-      opacity: 0.8;
-    }
+  &.active-class {
+    background-color: styles.$primary-color;
   }
-  
+  &.completed-class {
+    background-color: rgba(var(--primary-color-rgb), 0.8);
+  }
+  }
+
   .class-header {
-    margin-bottom: 12px;
+    padding-bottom: 3vw;  // 相对单位
   }
   
   .class-title {
     font-size: styles.$font-size-md;
     font-weight: bold;
-    color: styles.$text-color-primary;
-    display: block;
+    color: var(--text-color-primary);
   }
   
   .class-subtitle {
     font-size: styles.$font-size-sm;
-    color: styles.$text-color-secondary;
-    margin-top: 4px;
+    color: var(--text-color-secondary);
+    margin-top: 1vw; // 改用相对单位
   }
   
   .time-display {
