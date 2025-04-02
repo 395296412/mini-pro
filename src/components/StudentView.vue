@@ -32,10 +32,11 @@
                 }"
               >
                 <card
+                  :role="USER_ROLE.STUDENT"
+                  :status="course.status"
                   :title="course.title"
                   :student-name="course.description"
                   :start-time="course.timeRange"
-                  :status="course.status"
                   :duration="course.duration || 60"
                   :location="course.location || '训练区'"
                   :show-status-button="showStatusButtons"
@@ -73,6 +74,7 @@
 import { ref, computed } from 'vue';
 import Card from './Card.vue';
 import CardContainers from './CardContainers.vue';
+import { USER_ROLE,COURSE_STATUS } from '@/constants/status';
 
 // 生成唯一ID的函数
 const generateId = (() => {
@@ -91,7 +93,8 @@ const courses = ref([
     timeRange: '15:00 - 16:00',
     description: '3个动作/约25分钟',
     location: '健身区A',
-    status: '进行中',
+    status: COURSE_STATUS.IN_PROGRESS,
+    role: 2
   },
   {
     id: generateId(),
@@ -99,8 +102,8 @@ const courses = ref([
     timeRange: '10:00 - 11:30',
     description: '5个动作/约90分钟',
     location: '私教区域',
-    status: '待开始',
-
+    status: COURSE_STATUS.PENDING,
+    role: 2
   },
   {
     id: generateId(),
@@ -108,9 +111,8 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
-
   }
   ,
   {
@@ -119,9 +121,9 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
-
+    role: 2
   },
   {
     id: generateId(),
@@ -129,8 +131,9 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
+    role: 2
   },
   {
     id: generateId(),
@@ -138,8 +141,9 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
+    role: 2
   },
   {
     id: generateId(),
@@ -147,8 +151,9 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
+    role: 2
   },
   {
     id: generateId(),
@@ -156,8 +161,9 @@ const courses = ref([
     timeRange: '18:00 - 18:30',
     description: '4个动作/约30分钟',
     location: '瑜伽区',
-    status: '已完成',
+    status: COURSE_STATUS.COMPLETED,
     completeTime: '2025-04-01T18:30:00',
+    role: 2
   }
 ]);
 
@@ -165,16 +171,16 @@ const courses = ref([
 const sortedCourses = computed(() => {
   return [...courses.value].sort((a, b) => {
     // 当前课程（进行中）排在最前面
-    if (a.status === '进行中' && b.status !== '进行中') return -1;
-    if (a.status !== '进行中' && b.status === '进行中') return 1;
+    if (a.status === COURSE_STATUS.IN_PROGRESS && b.status !== COURSE_STATUS.IN_PROGRESS) return -1;
+    if (a.status !== COURSE_STATUS.IN_PROGRESS && b.status === COURSE_STATUS.IN_PROGRESS) return 1;
     
     // 已完成课程按时间倒序
-    if (a.status === '已完成' && b.status === '已完成') {
+    if (a.status === COURSE_STATUS.COMPLETED && b.status === COURSE_STATUS.COMPLETED) {
       return new Date(b.completeTime || 0) - new Date(a.completeTime || 0);
     }
     
     // 待开始课程按开始时间正序
-    if ((a.status === '待开始' || !a.status) && (b.status === '待开始' || !b.status)) {
+    if ((a.status === COURSE_STATUS.PENDING || !a.status) && (b.status === COURSE_STATUS.PENDING || !b.status)) {
       // 将时间字符串转换为可比较的格式
       const aTime = a.timeRange.split(' - ')[0].split(':').map(Number);
       const bTime = b.timeRange.split(' - ')[0].split(':').map(Number);
@@ -212,7 +218,7 @@ const handleStatusChange = (id, newStatus) => {
     courses.value[index].status = newStatus;
     
     // 如果变为进行中状态，可以添加高亮动画
-    if (newStatus === '进行中') {
+    if (newStatus === COURSE_STATUS.IN_PROGRESS) {
       // 这里可以添加高亮动画逻辑
     }
   }
@@ -223,7 +229,7 @@ const handleCourseComplete = (id) => {
   const index = courses.value.findIndex(item => item.id === id);
   if (index !== -1) {
     // 将课程状态设置为已完成
-    courses.value[index].status = '已完成';
+    courses.value[index].status = COURSE_STATUS.COMPLETED;
     // 记录完成时间
     courses.value[index].completeTime = new Date().toISOString();
     courses.value[index].progress = 100;
@@ -258,9 +264,6 @@ const navigateToBooking = () => {
 .student-view {
   padding: 4vw; // 相对单位
   --card-vertical-gap: 4vw; // 卡片垂直间距变量
-  --status-pending-color: #999999;
-  --status-active-color: #2196F3;
-  --status-completed-color: #4CAF50;
 }
 
 .courses-container {

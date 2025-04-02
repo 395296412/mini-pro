@@ -3,8 +3,10 @@
     <view 
       class="class-card"
       :class="{
-        'active-class': status === '进行中',
-        'completed-class': status === '已完成'
+        'active-class': status === COURSE_STATUS.ACTIVE,
+        'completed-class': status === COURSE_STATUS.COMPLETED && role === USER_ROLE.COACH,
+        'student-completed-class': status === COURSE_STATUS.COMPLETED && role === USER_ROLE.STUDENT,
+        'pending-class': status === COURSE_STATUS.PENDING
       }"
     >
       <view class="class-header flex-between">
@@ -54,8 +56,15 @@
   
   <script setup>
   import { ref, computed, defineProps, defineEmits } from 'vue';
+  import { COACH_STATUS_TEXT, STUDENT_STATUS_TEXT } from '@/constants/status';
+  import { COURSE_STATUS, USER_ROLE } from '../constants/status';
   
   const props = defineProps({
+    // 用户角色
+    role:{
+      type: Number,
+      default: USER_ROLE.COACH // 默认教练角色
+    },
     // 课程标题
     title: {
       type: String,
@@ -83,8 +92,8 @@
     },
     // 状态（进行中/待开始等）
     status: {
-      type: String,
-      default: '待开始'
+      type: Number,
+      default: COURSE_STATUS.PENDING
     },
     // 状态文本（可自定义显示文本，如"RUN"）
     statusText: {
@@ -131,9 +140,9 @@
     // 根据状态计算图标名称
     const statusIconName = computed(() => {
     switch(currentStatus.value) {
-        case '进行中':
+        case COURSE_STATUS.ACTIVE:
         return 'pause-circle-o';
-        case '已完成':
+        case COURSE_STATUS.COMPLETED:
         return 'stop-circle-o';
         default:
         return 'play-circle-o';
@@ -143,9 +152,9 @@
     // 根据状态计算图标颜色
     const statusIconColor = computed(() => {
     switch(currentStatus.value) {
-        case '进行中':
+        case COURSE_STATUS.ACTIVE:
         return 'var(--dark-color)';
-        case '已完成':
+        case COURSE_STATUS.COMPLETED:
         return 'var(--dark-color)';
         default:
         return 'var(--dark-color)';
@@ -154,31 +163,28 @@
 
     // 根据状态计算按钮文本
     const statusButtonText = computed(() => {
-    switch(currentStatus.value) {
-        case '进行中':
-        return '完成';
-        case '已完成':
-        return '结束';
-        default:
-        return '开始';
-    }
+      if (props.role === USER_ROLE.COACH) {
+        return COACH_STATUS_TEXT[currentStatus.value];
+      } else {
+        return STUDENT_STATUS_TEXT[currentStatus.value];
+      }
     });
 
     // 处理状态变更
     const handleStatusChange = () => {
-        if (currentStatus.value === '待开始') {
-            currentStatus.value = '进行中';
-            emit('statusChange', '进行中');
-        } else if (currentStatus.value === '进行中') {
-            currentStatus.value = '已完成';
-            emit('statusChange', '已完成');
-            // 通知父组件该课程已完成，需要移除
-            emit('complete');
-        } else if (currentStatus.value === '已完成') {
-            // 已经是完成状态，直接触发移除事件
-            emit('complete');
-        }
-        };
+      if (currentStatus.value === COURSE_STATUS.PENDING) {
+        currentStatus.value = COURSE_STATUS.ACTIVE;
+        emit('statusChange', COURSE_STATUS.ACTIVE);
+      } else if (currentStatus.value === COURSE_STATUS.ACTIVE) {
+        currentStatus.value = COURSE_STATUS.COMPLETED;
+        emit('statusChange', COURSE_STATUS.COMPLETED);
+        // 通知父组件该课程已完成，需要移除
+        emit('complete');
+      } else if (currentStatus.value === COURSE_STATUS.COMPLETED) {
+        // 已经是完成状态，直接触发移除事件
+        emit('complete');
+      }
+    };
   </script>
   
   <style lang="scss" scoped>
@@ -186,18 +192,30 @@
   
   // 课程卡片样式
   .class-card {
-  background-color: styles.$white;
   border-radius: 12px;
   padding: 4vw;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   width: 100%;
   transition: background-color 0.3s ease, opacity 0.3s ease;
 
+
+  // 活动中的卡片
   &.active-class {
     background-color: styles.$primary-color;
   }
+  // 教练已完成的卡片
   &.completed-class {
     background-color: rgba(var(--primary-color-rgb), 0.8);
+  }
+
+  //学员已完成的卡片
+  &.student-completed-class {
+    background-color: styles.$C8;
+  }
+
+  //未进行的卡片
+  &.pending-class {
+    background-color: styles.$pending-color2;
   }
   }
 

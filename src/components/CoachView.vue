@@ -22,6 +22,7 @@
       :remaining-lessons="classItem.remainingLessons"
       :show-status-button="true"
       :style="{ opacity: classItem.opacity !== undefined ? classItem.opacity : 1 }"
+      :role="USER_ROLE.COACH"
       @status-change="handleStatusChange(classItem.id, $event)"
       @complete="handleClassComplete(classItem.id)"
     />
@@ -33,6 +34,7 @@
 <script setup>
 import { ref } from 'vue';
 import Card from './Card.vue';
+import { USER_ROLE,COURSE_STATUS } from '@/constants/status';
 
 // 生成唯一ID的函数
 const generateId = (() => {
@@ -47,7 +49,7 @@ const todayClasses = ref([
     studentName: '李学员', 
     title: '增肌训练1', 
     startTime: '10:00', 
-    status: '进行中',
+    status: COURSE_STATUS.ACTIVE,
     duration: 45,
     location: '私教区域',
     progress: 75,
@@ -58,7 +60,7 @@ const todayClasses = ref([
     studentName: '王学员', 
     title: '减脂训练2', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -69,7 +71,7 @@ const todayClasses = ref([
     studentName: '王学员2', 
     title: '减脂训练3', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -80,7 +82,7 @@ const todayClasses = ref([
     studentName: '王学员3', 
     title: '减脂训练4', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -91,7 +93,7 @@ const todayClasses = ref([
     studentName: '王学员4', 
     title: '减脂训练5', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -102,7 +104,7 @@ const todayClasses = ref([
     studentName: '王学员5', 
     title: '减脂训练6', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -113,7 +115,7 @@ const todayClasses = ref([
     studentName: '王学员6', 
     title: '减脂训练7', 
     startTime: '14:00', 
-    status: '待开始',
+    status: COURSE_STATUS.PENDING,
     duration: 90,
     location: 'A区训练室',
     progress: 42,
@@ -134,7 +136,7 @@ const handleClassComplete = (id) => {
   const index = todayClasses.value.findIndex(item => item.id === id);
   if (index !== -1) {
     // 将课程状态设置为已完成
-    todayClasses.value[index].status = '已完成';
+    todayClasses.value[index].status = COURSE_STATUS.COMPLETED;
     
     // 创建一个逐渐减少透明度的动画效果
     let opacity = 1;
