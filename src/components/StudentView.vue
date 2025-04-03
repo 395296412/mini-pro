@@ -231,9 +231,7 @@ const handleCourseComplete = (id) => {
     // 将课程状态设置为已完成
     courses.value[index].status = COURSE_STATUS.COMPLETED;
     // 记录完成时间
-    courses.value[index].completeTime = new Date().toISOString();
-    courses.value[index].progress = 100;
-    
+    courses.value[index].completeTime = new Date().toISOString();    
     // 创建一个逐渐减少透明度的动画效果
     let opacity = 1;
     const fadeInterval = setInterval(() => {
