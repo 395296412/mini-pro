@@ -56,8 +56,7 @@
   
   <script setup>
   import { ref, computed, defineProps, defineEmits } from 'vue';
-  import { COACH_STATUS_TEXT, STUDENT_STATUS_TEXT } from '@/constants/status';
-  import { COURSE_STATUS, USER_ROLE } from '../constants/status';
+  import { COACH_STATUS_TEXT, STUDENT_STATUS_TEXT,COURSE_STATUS, USER_ROLE } from '@/constants/status';
   
   const props = defineProps({
     // 用户角色
@@ -241,11 +240,11 @@
     font-weight: bold;
   }
 
-    // 状态按钮样式
-    .status-button {
+  // 状态按钮样式
+  .status-button {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent; /* 禁用iOS上的点击高亮 */
@@ -259,7 +258,7 @@
     .status-button-text {
     font-size: styles.$font-size-sm;
     font-weight: 500;
-    }
+  }
   
   .class-info {
     display: flex;
