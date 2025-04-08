@@ -26,9 +26,9 @@
                   :style="{ marginBottom: index !== sortedCourses.length - 1 ? 'var(--card-vertical-gap)' : '0' }"
                   class="course-wrapper"
                   :class="{
-                  'course-active': course.status === '进行中',
-                  'course-completed': course.status === '已完成',
-                  'course-pending': course.status === '待开始' || !course.status
+                  'course-active': course.status === COURSE_STATUS.ACTIVE,
+                  'course-completed': course.status === COURSE_STATUS.COMPLETED,
+                  'course-pending': course.status === COURSE_STATUS.PENDING || !course.status
                 }"
               >
                 <card
