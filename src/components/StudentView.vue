@@ -2,11 +2,11 @@
   <view class="student-view">
 
     <!-- 训练计划卡片 -->
-    <view class="card-wrapper">
-      <card-containers 
-        :title="trainingPlan.title"
-        :progress="trainingPlan.progress"
-        :stats="trainingPlan.stats"
+    <view class="card mb-gap">
+      <card-containers
+          :title="trainingPlan.title"
+          :progress="trainingPlan.progress"
+          :stats="trainingPlan.stats"
       >
         <!-- 统计信息 -->
         <view class="stats-row">
@@ -18,33 +18,33 @@
 
         <!-- 课程列表 - 使用Card组件 -->
         <template #courses>
-          <view class="courses-container">
-            <transition-group name="card-list" tag="view" class="card-list">
-              <view 
-                v-for="(course, index) in sortedCourses" 
-                :key="course.id"
-                :style="{ marginBottom: index !== sortedCourses.length - 1 ? 'var(--card-vertical-gap)' : '0' }"
-                class="course-wrapper"
-                :class="{ 
+          <view class="flex-column">
+            <transition-group name="card-list" tag="view" class="card-list flex-column">
+              <view
+                  v-for="(course, index) in sortedCourses"
+                  :key="course.id"
+                  :style="{ marginBottom: index !== sortedCourses.length - 1 ? 'var(--card-vertical-gap)' : '0' }"
+                  class="course-wrapper"
+                  :class="{
                   'course-active': course.status === '进行中',
                   'course-completed': course.status === '已完成',
                   'course-pending': course.status === '待开始' || !course.status
                 }"
               >
                 <card
-                  :role="USER_ROLE.STUDENT"
-                  :status="course.status"
-                  :title="course.title"
-                  :student-name="course.description"
-                  :start-time="course.timeRange"
-                  :duration="course.duration || 60"
-                  :location="course.location || '训练区'"
-                  :show-status-button="showStatusButtons"
-                  :show-progress="course.showProgress"
-                  :progress="course.progress"
-                  :style="{ opacity: course.opacity !== undefined ? course.opacity : 1 }"
-                  @status-change="handleStatusChange(course.id, $event)"
-                  @complete="handleCourseComplete(course.id)"
+                    :role="USER_ROLE.STUDENT"
+                    :status="course.status"
+                    :title="course.title"
+                    :student-name="course.description"
+                    :start-time="course.timeRange"
+                    :duration="course.duration || 60"
+                    :location="course.location || '训练区'"
+                    :show-status-button="showStatusButtons"
+                    :show-progress="course.showProgress"
+                    :progress="course.progress"
+                    :style="{ opacity: course.opacity !== undefined ? course.opacity : 1 }"
+                    @status-change="handleStatusChange(course.id, $event)"
+                    @complete="handleCourseComplete(course.id)"
                 />
               </view>
             </transition-group>
@@ -52,18 +52,18 @@
         </template>
       </card-containers>
     </view>
-  
+
     <!-- 教练卡片 -->
-    <view class="card coach-card">
+    <view class="card coach-card mb-gap">
       <view class="flex align-center">
         <image class="coach-avatar" :src="coach.avatar" mode="aspectFill"></image>
         <view class="ml-md">
-          <text class="text-md text-bold block">{{ coach.name }}</text>
+          <text class="text-md text-bold">{{ coach.name }}</text>
           <text class="text-sm text-light">{{ coach.description }}</text>
         </view>
         <view class="flex-1"></view>
         <view class="add-button button-scale-animation" @click="navigateToBooking">
-          <van-icon name="plus" size="24px" color="var(--primary-color)" />
+          <van-icon name="plus" size="24px" color="var(--primary-color)"/>
         </view>
       </view>
     </view>
@@ -71,10 +71,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import Card from './Card.vue';
 import CardContainers from './CardContainers.vue';
-import { USER_ROLE,COURSE_STATUS } from '@/constants/status';
+import {USER_ROLE, COURSE_STATUS} from '@/constants/status';
 
 // 生成唯一ID的函数
 const generateId = (() => {
@@ -173,22 +173,22 @@ const sortedCourses = computed(() => {
     // 当前课程（进行中）排在最前面
     if (a.status === COURSE_STATUS.IN_PROGRESS && b.status !== COURSE_STATUS.IN_PROGRESS) return -1;
     if (a.status !== COURSE_STATUS.IN_PROGRESS && b.status === COURSE_STATUS.IN_PROGRESS) return 1;
-    
+
     // 已完成课程按时间倒序
     if (a.status === COURSE_STATUS.COMPLETED && b.status === COURSE_STATUS.COMPLETED) {
       return new Date(b.completeTime || 0) - new Date(a.completeTime || 0);
     }
-    
+
     // 待开始课程按开始时间正序
     if ((a.status === COURSE_STATUS.PENDING || !a.status) && (b.status === COURSE_STATUS.PENDING || !b.status)) {
       // 将时间字符串转换为可比较的格式
       const aTime = a.timeRange.split(' - ')[0].split(':').map(Number);
       const bTime = b.timeRange.split(' - ')[0].split(':').map(Number);
-      
+
       if (aTime[0] !== bTime[0]) return aTime[0] - bTime[0]; // 比较小时
       return aTime[1] - bTime[1]; // 比较分钟
     }
-    
+
     return 0;
   });
 });
@@ -198,9 +198,9 @@ const trainingPlan = ref({
   title: '增肌强化 · 第4周',
   progress: 65,
   stats: [
-    { label: '完成课程', value: '12节' },
-    { label: '体重变化', value: '+3.2kg' },
-    { label: '体脂率', value: '-1.8%' }
+    {label: '完成课程', value: '12节'},
+    {label: '体重变化', value: '+3.2kg'},
+    {label: '体脂率', value: '-1.8%'}
   ]
 });
 
@@ -216,7 +216,7 @@ const handleStatusChange = (id, newStatus) => {
   const index = courses.value.findIndex(item => item.id === id);
   if (index !== -1) {
     courses.value[index].status = newStatus;
-    
+
     // 如果变为进行中状态，可以添加高亮动画
     if (newStatus === COURSE_STATUS.IN_PROGRESS) {
       // 这里可以添加高亮动画逻辑
@@ -231,7 +231,7 @@ const handleCourseComplete = (id) => {
     // 将课程状态设置为已完成
     courses.value[index].status = COURSE_STATUS.COMPLETED;
     // 记录完成时间
-    courses.value[index].completeTime = new Date().toISOString();    
+    courses.value[index].completeTime = new Date().toISOString();
     // 创建一个逐渐减少透明度的动画效果
     let opacity = 1;
     const fadeInterval = setInterval(() => {
@@ -260,11 +260,20 @@ const navigateToBooking = () => {
 @use '@/assets/styles/index.scss' as styles;
 
 .student-view {
-  padding: 4vw; // 相对单位
-  --card-vertical-gap: 4vw; // 卡片垂直间距变量
+  padding: $spacing-lg; // 相对单位
+  --card-vertical-gap: #{$spacing-lg}; // 卡片垂直间距变量
+
+  .course-wrapper {
+    transition: border-color $transition-normal;
+    border-left-width: 0.4em;
+
+    &.course-active {
+      border-left-color: $primary-color;
+    }
+  }
 }
 
-.courses-container {
+.flex-column {
   display: flex;
   flex-direction: column;
 }
@@ -274,20 +283,7 @@ const navigateToBooking = () => {
   flex-direction: column;
 }
 
-.course-wrapper {
-  width: 100%;
-  transition: border-color 0.3s ease;
-}
-
-.card-wrapper {
-  margin-bottom: var(--card-vertical-gap); // 使用变量控制间距
-}
-
-.coach-card {
-  margin-bottom: var(--card-vertical-gap); // 使用变量控制间距
-}
-
-.card.mt-md {
+.mb-gap {
   margin-bottom: var(--card-vertical-gap); // 使用变量控制间距
 }
 
@@ -325,86 +321,26 @@ const navigateToBooking = () => {
 .stat-label {
   font-size: styles.$font-size-sm;
   color: styles.$text-color-secondary;
-  margin-top: 4px;
+  margin-top: 0.25em;
 }
 
 // 教练头像
 .coach-avatar {
-  width: 48px;
-  height: 48px;
+  width: 3em;
+  height: 3em;
   border-radius: 50%;
 }
 
 // 添加按钮
 .add-button {
-  width: 40px;
-  height: 40px;
+  width: calc(1em + 2vw);
+  height: calc(1em + 2vw);
+  min-width: 2.5em;
+  min-height: 2.5em;
   border-radius: 50%;
   background-color: rgba(var(--primary-color-rgb), 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-// 辅助类
-.flex {
-  display: flex;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.align-center {
-  align-items: center;
-}
-
-.ml-md {
-  margin-left: 3vw;
-}
-
-.text-md {
-  font-size: styles.$font-size-md;
-}
-
-.text-bold {
-  font-weight: bold;
-}
-
-.text-sm {
-  font-size: styles.$font-size-sm;
-}
-
-.text-light {
-  color: styles.$text-color-light;
-}
-
-.block {
-  display: block;
-}
-
-// 卡片动画
-.card-list-enter-active,
-.card-list-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.card-list-enter-from,
-.card-list-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-.card-list-move {
-  transition: transform 0.5s ease;
-}
-
-// 按钮动画
-.button-scale-animation {
-  transition: transform 0.2s ease;
-  
-  &:active {
-    transform: scale(0.95);
-  }
 }
 </style>
