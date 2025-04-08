@@ -287,17 +287,6 @@ const navigateToBooking = () => {
   margin-bottom: var(--card-vertical-gap); // 使用变量控制间距
 }
 
-// 卡片基础样式
-.card {
-  background-color: styles.$background-color-card;
-  border-radius: styles.$border-radius-lg;
-  padding: styles.$spacing-lg;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  color: styles.$text-color-primary;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 // 统计数据横向布局
 .stats-row {
   display: flex;
